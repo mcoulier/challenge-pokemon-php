@@ -8,14 +8,13 @@ $pokemonData = file_get_contents('https://pokeapi.co/api/v2/pokemon/' . $_GET['i
 $data =  json_decode($pokemonData, true);
 $image = $data['sprites']['front_shiny'];
 $imageData = base64_encode(file_get_contents($image));
-$value = "";
-$numbers = array();
+$randArray = [];
 
-while (count($numbers) > 4) {
+for ($i = 0; $i > count($data['moves']); $i++){
     $value = rand(0,count($data['moves']));
-    echo $data['moves'][$value]['move']['name'];
-
+    $randArray[] = $value;
 }
+echo $randArray;
 
 echo '<img src="data:image/jpeg;base64,'.$imageData.'">';
 echo $data['id'];
