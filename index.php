@@ -12,10 +12,12 @@ $evoData = json_decode($speciesData, true);
 
 $evoChain = file_get_contents ($evoData ["evolution_chain"]["url"]);
 $evoDecode = json_decode($evoChain, true);
+$nextEvo = $evoDecode['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'];
 
 $image = $data['sprites']['front_shiny'];
 $imageData = base64_encode(file_get_contents($image));
 $randArray = [];
+
 
 echo '<img src="data:image/jpeg;base64,'.$imageData.'">';
 echo $data['id'];
@@ -28,9 +30,7 @@ for ($i = 0; $i < 5; $i++){
 }
 
 echo $evoData["evolves_from_species"]["name"];
-echo $evoDecode['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'];
-echo $evoDecode["chain"]["evolves_to"][0]["evolves_to"];
-
+echo $nextEvo;
 
 
 //echo var_dump($data);
