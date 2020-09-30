@@ -11,18 +11,15 @@ $imageData = base64_encode(file_get_contents($image));
 $randArray = [];
 
 for ($i = 0; $i > count($data['moves']); $i++){
-    $value = rand(0,count($data['moves']));
+    $value = rand(0, count($data['moves']));
     $randArray[] = $value;
+    echo $data['moves'][$value]['move']['name'];
 }
-echo $randArray;
+
+echo implode($randArray);
 
 echo '<img src="data:image/jpeg;base64,'.$imageData.'">';
 echo $data['id'];
 echo $data['name'];
-
-echo $data['moves'][$value]['move']['name'];
-echo $data['moves'][$value]['move']['name'];
-echo $data['moves'][$value]['move']['name'];
-echo $data['moves'][$value]['move']['name'];
 
 //echo var_dump($data);
