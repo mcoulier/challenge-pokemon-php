@@ -58,7 +58,7 @@ echo $evoData ["evolution_chain"]["url"]
 <h1>Pokédex</h1>
 
 <form action="index.php" method="get">
-    pokemonName: <input type="text" name="id"><br>
+    Name/ID: <input type="text" name="id"><br>
     <input type="submit" value="Submit">
 </form>
 
