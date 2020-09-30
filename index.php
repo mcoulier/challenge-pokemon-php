@@ -28,7 +28,7 @@ for ($i = 0; $i < 5; $i++){
 }
 
 echo $evoData["evolves_from_species"]["name"];
-echo $evoDecode['chain']['evolves_to'];
+echo $evoDecode['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'];
 echo $evoDecode["chain"]["evolves_to"][0]["evolves_to"];
 
 
