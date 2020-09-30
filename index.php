@@ -1,8 +1,8 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//error_reporting(E_ALL);
 
 $pokemonData = file_get_contents('https://pokeapi.co/api/v2/pokemon/' . $_GET['id']);
 $speciesData = file_get_contents('https://pokeapi.co/api/v2/pokemon-species/' . $_GET ['id']);
@@ -12,24 +12,26 @@ $evoData = json_decode($speciesData, true);
 
 $evoChain = file_get_contents (rtrim($evoData ["evolution_chain"]["url"],'/'));
 $evoDecode = json_decode($evoChain, true);
-$nextEvo = $evoDecode['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'];
+//$nextEvo = $evoDecode['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'];
 
 $image = $data['sprites']['front_shiny'];
 $imageData = base64_encode(file_get_contents($image));
+$moveCount = count($data['moves']);
 $randArray = [];
 
 if (isset($nextEvo) === null){
     echo $nextEvo = "";
-} else{
+} else {
+
 }
 
 //----Loop to get 4 random moves
 
-for ($i = 0; $i < 5; $i++){
-    $value = rand(0, count($data['moves']));
-    $randArray[] = $value;
-    echo $data['moves'][json_encode($value)]['move']['name'];
-}
+//for ($i = 0; $i < 5; $i++){
+//    $value = rand(0, count($data['moves']));
+//    $randArray[] = $value;
+//    echo $data['moves'][json_encode($value)]['move']['name'];
+//}
 
 //--------------------------------
 
@@ -38,6 +40,8 @@ if (isset($_GET['id'])) {
 } else {
     $pokemon = "1";
 }
+
+echo $evoData ["evolution_chain"]["url"]
 
 ?>
 
@@ -66,11 +70,17 @@ if (isset($_GET['id'])) {
 <p id="name">Name: <?php echo $data['name']?>
 </p>
 
-<ul id="moves">Moves: <?php echo $data['moves'][json_encode($value)]['move']['name'];?>
+<p id="moves">Moves:
+<ul id="moves"><?php for ($i = 0;$i <= $moveCount && $i < 4; $i++){
+        $value = rand(0, count($data['moves']));
+        $randArray[] = $value;
+        echo $data['moves'][json_encode($value)]['move']['name'] . "<br>";
+    }?>
 </ul>
+</p>
+
 
 <p id="prevEvolution">Previous Evolution: <?php echo $evoData["evolves_from_species"]["name"];?></p>
-<p id="nextEvolution">Next Evolution: <?php echo $nextEvo;?></p>
 
 </body>
 </html>
