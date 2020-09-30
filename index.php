@@ -18,10 +18,6 @@ $image = $data['sprites']['front_shiny'];
 $imageData = base64_encode(file_get_contents($image));
 $randArray = [];
 
-
-echo '<img src="data:image/jpeg;base64,'.$imageData.'">';
-echo $data['id'];
-
 for ($i = 0; $i < 5; $i++){
     $value = rand(0, count($data['moves']));
     $randArray[] = $value;
@@ -30,9 +26,6 @@ for ($i = 0; $i < 5; $i++){
 
 echo $evoData["evolves_from_species"]["name"];
 echo $nextEvo;
-
-
-//echo var_dump($data);
 
 ?>
 
@@ -51,10 +44,21 @@ echo $nextEvo;
 <form action="index.php" method="get">
     pokemonName: <input type="text" name="id"><br>
     <input type="submit" value="Submit">
+</form>
 
-<p id="name"><?php echo $data['name']?>
+<img id="pokeImage" src="<?php echo $image?>">
+
+<p id="idNumber">ID: <?php echo $data['id']?>
 </p>
 
-</form>
+<p id="name">Name: <?php echo $data['name']?>
+</p>
+
+<p id="name">Name: <?php echo $data['name']?>
+</p>
+
+<ul id="moves">Moves: <?php echo $data['moves'][json_encode($value)]['move']['name'];?>
+</ul>
+
 </body>
 </html>
