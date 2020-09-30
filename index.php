@@ -10,7 +10,7 @@ $speciesData = file_get_contents('https://pokeapi.co/api/v2/pokemon-species/' . 
 $data =  json_decode($pokemonData, true);
 $evoData = json_decode($speciesData, true);
 
-$evoChain = file_get_contents ($evoData ["evolution_chain"]["url"]);
+$evoChain = file_get_contents (rtrim($evoData ["evolution_chain"]["url"],'/'));
 $evoDecode = json_decode($evoChain, true);
 $nextEvo = $evoDecode['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'];
 
@@ -18,14 +18,26 @@ $image = $data['sprites']['front_shiny'];
 $imageData = base64_encode(file_get_contents($image));
 $randArray = [];
 
+if (isset($nextEvo) === null){
+    echo $nextEvo = "";
+} else{
+}
+
+//----Loop to get 4 random moves
+
 for ($i = 0; $i < 5; $i++){
     $value = rand(0, count($data['moves']));
     $randArray[] = $value;
     echo $data['moves'][json_encode($value)]['move']['name'];
 }
 
-echo $evoData["evolves_from_species"]["name"];
-echo $nextEvo;
+//--------------------------------
+
+if (isset($_GET['id'])) {
+    $pokemon = $_GET['id'];
+} else {
+    $pokemon = "1";
+}
 
 ?>
 
@@ -54,11 +66,11 @@ echo $nextEvo;
 <p id="name">Name: <?php echo $data['name']?>
 </p>
 
-<p id="name">Name: <?php echo $data['name']?>
-</p>
-
 <ul id="moves">Moves: <?php echo $data['moves'][json_encode($value)]['move']['name'];?>
 </ul>
+
+<p id="prevEvolution">Previous Evolution: <?php echo $evoData["evolves_from_species"]["name"];?></p>
+<p id="nextEvolution">Next Evolution: <?php echo $nextEvo;?></p>
 
 </body>
 </html>
