@@ -13,10 +13,8 @@ $randArray = [];
 for ($i = 0; $i > count($data['moves']); $i++){
     $value = rand(0, count($data['moves']));
     $randArray[] = $value;
-    echo $data['moves'][$value]['move']['name'];
+    echo $data['moves'][implode($randArray)]['move']['name'];
 }
-
-echo implode($randArray);
 
 echo '<img src="data:image/jpeg;base64,'.$imageData.'">';
 echo $data['id'];
