@@ -10,14 +10,14 @@ $image = $data['sprites']['front_shiny'];
 $imageData = base64_encode(file_get_contents($image));
 $randArray = [];
 
-for ($i = 0; $i > count($data['moves']); $i++){
-    $value = rand(0, count($data['moves']));
-    $randArray[] = $value;
-    echo $data['moves'][implode($randArray)]['move']['name'];
-}
-
 echo '<img src="data:image/jpeg;base64,'.$imageData.'">';
 echo $data['id'];
 echo $data['name'];
+
+for ($i = 0; $i < 5; $i++){
+    $value = rand(0, count($data['moves']));
+    $randArray[] = $value;
+    echo $data['moves'][json_encode($value)]['move']['name'];
+}
 
 //echo var_dump($data);
