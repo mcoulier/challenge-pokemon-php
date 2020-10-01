@@ -8,8 +8,9 @@ if (isset($_GET['id'])) {
     $nameId = $_GET['id'];
     $pokemonData = file_get_contents('https://pokeapi.co/api/v2/pokemon/' . $nameId);
     $data = json_decode($pokemonData, true);
+    $pokeName = $data['name'];
 
-    if ($data['name'] !== null) {
+    if ($pokeName !== null) {
         $image = $data['sprites']['front_shiny'];
         $imageData = base64_encode(file_get_contents($image));
         $moveCount = count($data['moves']);
@@ -88,7 +89,12 @@ if (isset($_GET['id'])) {
 <p id="idNumber">ID: <?php echo $data['id']?>
 </p>
 
-<p id="name">Name: <?php echo $data['name']?>
+<p id="name">Name: <?php if (isset($pokeName)){
+        echo $pokeName;
+    } else {
+    $pokeName = "";
+    }
+    ?>
 </p>
 
 <p id="moves">Moves:
