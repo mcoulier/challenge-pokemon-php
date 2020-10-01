@@ -6,10 +6,7 @@ body {
 
 }
 
-h1 {
-    position: absolute;
-    grid-gap: 20px;
-}
+
 
 form {
     padding-top: 5px;
@@ -17,11 +14,11 @@ form {
 
 #searchPokemon {
     position: relative;
-    justify-items: start;
     grid-row: 2;
 }
 
 #evolutionPokemon {
     position: relative;
     grid-column: 2;
+    grid-row: 2;
 }
