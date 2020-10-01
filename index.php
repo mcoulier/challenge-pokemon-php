@@ -11,6 +11,8 @@ if (isset($_GET['id'])) {
     $data = json_decode($pokemonData, true);
     $pokeName = $data['name'];
     $pokeId = $data['id'];
+    $pokeHeight = $data['height'];
+    $pokeWeight = $data['weight'];
 
 //---Getting image and moves from api--------
     if ($pokeName !== null) {
@@ -78,18 +80,23 @@ if (isset($_GET['id'])) {
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
 <h1>Pokédex</h1>
 
+
 <form action="index.php" method="get">
-    Name/ID: <input type="text" name="id"><br>
+    Name/ID: <input type="text" name="id" placeholder="Enter name or ID"><br>
     <input type="submit" value="Submit">
 </form>
 
-<img id="pokeImage" src="<?php if (isset ($image)) {
+
+<div id="searchPokemon">
+    <img id="pokeImage" src="<?php if (isset ($image)) {
     echo $image;
+
 } else {
     $image = "";
 } ?>">
@@ -123,14 +130,18 @@ if (isset($_GET['id'])) {
     ?>
 </ul>
 </p>
+</div>
 
-<p id="prevEvolution">Previous Evolution: <?php if (isset ($prevEvo)){
+<div id="evolutionPokemon">
+<p id="prevEvolution">Previous Evolution: </p>
+<p>
+<?php if (isset ($prevEvo)){
     echo $prevEvo;
         echo '<img src="data:image/jpeg;base64,'.$showPrevImg.'">';
     } else {
     echo "";
-    };?></p>
-
-
+    };?>
+</p>
+</div>
 </body>
 </html>
