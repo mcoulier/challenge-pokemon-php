@@ -84,16 +84,15 @@ if (isset($_GET['id'])) {
     <title>Document</title>
 </head>
 <body>
-<h1>Pokédex</h1>
-
-
-<form action="index.php" method="get">
-    Name/ID: <input type="text" name="id" placeholder="Enter name or ID"><br>
-    <input type="submit" value="Submit">
-</form>
-
+<h1><img src="https://www.iconfinder.com/data/icons/pokemon-go-5/100/4-512.png" width="32" height="32"> Pokédex</h1>
 
 <div id="searchPokemon">
+
+    <form action="index.php" method="get">
+        <b>Name/ID: </b><input type="text" name="id" placeholder="Enter name or ID"><br>
+        <input type="submit" value="Submit">
+    </form>
+
     <img id="pokeImage" src="<?php if (isset ($image)) {
     echo $image;
 
@@ -101,7 +100,7 @@ if (isset($_GET['id'])) {
     $image = "";
 } ?>">
 
-<p id="name">ID: <?php if (isset($pokeId)){
+    <p id="name"><b>ID: </b><?php if (isset($pokeId)){
         echo "#".$pokeId;
     } else {
         $pokeId = "";
@@ -109,7 +108,7 @@ if (isset($_GET['id'])) {
     ?>
 </p>
 
-<p id="name">Name: <?php if (isset($pokeName)){
+    <p id="name"><b>Name: </b><?php if (isset($pokeName)){
         echo $pokeName;
     } else {
     $pokeName = "";
@@ -117,7 +116,7 @@ if (isset($_GET['id'])) {
     ?>
 </p>
 
-<p id="moves">Moves:
+    <p id="moves"><b>Moves:</b>
 <ul id="moves"><?php if (isset($fourMoves)){
     for ($i = 0; $i <= $moveCount && $i < 4; $i++){
         $value = rand(0, $moveCount);
@@ -133,11 +132,11 @@ if (isset($_GET['id'])) {
 </div>
 
 <div id="evolutionPokemon">
-<p id="prevEvolution">Previous Evolution: </p>
+    <p id="prevEvolution"><b>Previous Evolution: </b></p>
 <p>
 <?php if (isset ($prevEvo)){
-    echo $prevEvo;
-        echo '<img src="data:image/jpeg;base64,'.$showPrevImg.'">';
+        echo '<img src="data:image/jpeg;base64,'.$showPrevImg.'">' . "<br>";
+    echo "<b>Name: </b>" . $prevEvo;
     } else {
     echo "";
     };?>
