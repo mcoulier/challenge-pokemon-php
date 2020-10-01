@@ -11,8 +11,7 @@ if (isset($_GET['id'])) {
     $data = json_decode($pokemonData, true);
     $pokeName = $data['name'];
     $pokeId = $data['id'];
-    $pokeHeight = $data['height'];
-    $pokeWeight = $data['weight'];
+    $pokeType = $data['types'][0]['type']['name'];
 
 //---Getting image and moves from api--------
     if ($pokeName !== null) {
@@ -129,6 +128,15 @@ if (isset($_GET['id'])) {
     ?>
 </ul>
 </p>
+
+    <p id="name"><b>Type: </b><?php if (isset($pokeType)){
+            echo $pokeType;
+        } else {
+            $pokeType = "";
+        }
+        ?>
+    </p>
+
 </div>
 
 <div id="evolutionPokemon">
