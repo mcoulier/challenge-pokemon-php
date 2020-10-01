@@ -22,7 +22,7 @@ if (isset($_GET['id'])) {
 
         $speciesData = file_get_contents('https://pokeapi.co/api/v2/pokemon-species/' . $_GET ['id']);
         $evoData = json_decode($speciesData, true);
-        $prevEvo = $evoData["evolves_from_species"]["name"];
+        $prevEvo = $evoData["evolves_from_species"]['name'];
 
         if ($prevEvo !== null){
             $evoChain = file_get_contents (rtrim($evoData ["evolution_chain"]["url"],'/'));
@@ -31,11 +31,13 @@ if (isset($_GET['id'])) {
             $prevDecode = json_decode($prevName, true);
             $prevImg = $prevDecode['sprites']['front_shiny'];
             $showPrevImg = base64_encode(file_get_contents($prevImg));
-
+        } else {
+            $evoData= "";
         }
 
     }
 }
+
 
 
 //$nextEvo = $evoDecode['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'];
