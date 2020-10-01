@@ -20,9 +20,9 @@ if (isset($_GET['id'])) {
         $randArray = [];
 //---Loop to get 4 moves---------------------
         for ($i = 0; $i <= $moveCount && $i < 4; $i++) {
-            $value = rand(0, count($data['moves']));
+            $value = rand(0, $moveCount);
             $randArray[] = $value;
-            $uniqueMoves = array_unique($randArray);
+            $fourMoves = $data['moves'][json_encode($value)]['move']['name'];
         }
 //---Getting data for evolutions--------------
         $speciesData = file_get_contents('https://pokeapi.co/api/v2/pokemon-species/' . $_GET ['id']);
@@ -111,14 +111,18 @@ if (isset($_GET['id'])) {
 </p>
 
 <p id="moves">Moves:
-<ul id="moves"><?php for ($i = 0;$i <= $moveCount && $i < 4; $i++){
+<ul id="moves"><?php if (isset($fourMoves)){
+    for ($i = 0; $i <= $moveCount && $i < 4; $i++){
         $value = rand(0, $moveCount);
         $randArray[] = $value;
         echo $data['moves'][json_encode($value)]['move']['name'] . "<br>";
-    }?>
+    }
+    } else {
+        $fourMoves = "";
+    }
+    ?>
 </ul>
 </p>
-
 
 <p id="prevEvolution">Previous Evolution: <?php if (isset ($prevEvo)){
     echo $prevEvo;
