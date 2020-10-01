@@ -23,11 +23,11 @@ if (isset($_GET['id'])) {
 
         $speciesData = file_get_contents('https://pokeapi.co/api/v2/pokemon-species/' . $_GET ['id']);
         $evoData = json_decode($speciesData, true);
-        $prevEvo = $evoData["evolves_from_species"]['name'];
 
-        if ($prevEvo !== null){
+        if ($evoData["evolves_from_species"] !== null){
             $evoChain = file_get_contents (rtrim($evoData ["evolution_chain"]["url"],'/'));
             $evoDecode = json_decode($evoChain, true);
+            $prevEvo = $evoData["evolves_from_species"]['name'];
             $prevName = @file_get_contents('https://pokeapi.co/api/v2/pokemon/' . $prevEvo);
             $prevDecode = json_decode($prevName, true);
             $prevImg = $prevDecode['sprites']['front_shiny'];
