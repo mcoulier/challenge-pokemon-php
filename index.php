@@ -39,11 +39,11 @@ $randArray = [];
 
 //--------------------------------
 
-if (isset($_GET['id'])) {
-    $pokemon = $_GET['id'];
-} else {
-    $pokemon = "1";
-}
+//if (isset($_GET['id'])) {
+//    $pokemon = $_GET['id'];
+//} else {
+//    $pokemon = "1";
+//}
 
 ?>
 
@@ -89,6 +89,6 @@ if (isset($_GET['id'])) {
     echo "";
     };?></p>
 
-<img id="prevImage" src="<?php echo $image?>">
+
 </body>
 </html>
