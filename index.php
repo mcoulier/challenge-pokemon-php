@@ -1,28 +1,41 @@
 <?php
 
-//ini_set('display_errors', 1);
-//ini_set('display_startup_errors', 1);
-//error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+if (isset($_GET['id'])) {
+    $nameId = $_GET['id'];
+    $pokemonData = file_get_contents('https://pokeapi.co/api/v2/pokemon/' . $nameId);
+    $data = json_decode($pokemonData, true);
+    if ($data['name'] !== null) {
+        $image = $data['sprites']['front_shiny'];
+        $moveCount = count($data['moves']);
+        $randArray = [];
+
+        for ($i = 0; $i <= $moveCount && $i < 4; $i++) {
+            $value = rand(0, count($data['moves']));
+            $randArray[] = $value;
+        }
+    }
+}
+
 
 $pokemonData = file_get_contents('https://pokeapi.co/api/v2/pokemon/' . $_GET['id']);
 $speciesData = file_get_contents('https://pokeapi.co/api/v2/pokemon-species/' . $_GET ['id']);
 
-$data =  json_decode($pokemonData, true);
 $evoData = json_decode($speciesData, true);
 
 $evoChain = file_get_contents (rtrim($evoData ["evolution_chain"]["url"],'/'));
 $evoDecode = json_decode($evoChain, true);
 //$nextEvo = $evoDecode['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'];
 
-$image = $data['sprites']['front_shiny'];
 $imageData = base64_encode(file_get_contents($image));
-$moveCount = count($data['moves']);
 $prevEvo = $evoData["evolves_from_species"]["name"];
 $prevName = @file_get_contents('https://pokeapi.co/api/v2/pokemon/' . $prevEvo);
 $prevDecode = json_decode($prevName, true);
 $prevImg = $prevDecode['sprites']['front_shiny'];
 $showPrevImg = base64_encode(file_get_contents($prevImg));
-$randArray = [];
 
 //if (isset($nextEvo) === null){
 //    echo $nextEvo = "";
