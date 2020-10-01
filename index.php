@@ -4,26 +4,30 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+//---Getting input data---------------------
 if (isset($_GET['id'])) {
     $nameId = $_GET['id'];
     $pokemonData = file_get_contents('https://pokeapi.co/api/v2/pokemon/' . $nameId);
     $data = json_decode($pokemonData, true);
     $pokeName = $data['name'];
+    $pokeId = $data['id'];
 
+//---Getting image and moves from api--------
     if ($pokeName !== null) {
         $image = $data['sprites']['front_shiny'];
         $imageData = base64_encode(file_get_contents($image));
         $moveCount = count($data['moves']);
         $randArray = [];
-
+//---Loop to get 4 moves---------------------
         for ($i = 0; $i <= $moveCount && $i < 4; $i++) {
             $value = rand(0, count($data['moves']));
             $randArray[] = $value;
+            $uniqueMoves = array_unique($randArray);
         }
-
+//---Getting data for evolutions--------------
         $speciesData = file_get_contents('https://pokeapi.co/api/v2/pokemon-species/' . $_GET ['id']);
         $evoData = json_decode($speciesData, true);
-
+//---Getting image & name for evolution--------
         if ($evoData["evolves_from_species"] !== null){
             $evoChain = file_get_contents (rtrim($evoData ["evolution_chain"]["url"],'/'));
             $evoDecode = json_decode($evoChain, true);
@@ -84,9 +88,18 @@ if (isset($_GET['id'])) {
     <input type="submit" value="Submit">
 </form>
 
-<img id="pokeImage" src="<?php echo $image?>">
+<img id="pokeImage" src="<?php if (isset ($image)) {
+    echo $image;
+} else {
+    $image = "";
+} ?>">
 
-<p id="idNumber">ID: <?php echo $data['id']?>
+<p id="name">ID: <?php if (isset($pokeId)){
+        echo "#".$pokeId;
+    } else {
+        $pokeId = "";
+    }
+    ?>
 </p>
 
 <p id="name">Name: <?php if (isset($pokeName)){
@@ -99,7 +112,7 @@ if (isset($_GET['id'])) {
 
 <p id="moves">Moves:
 <ul id="moves"><?php for ($i = 0;$i <= $moveCount && $i < 4; $i++){
-        $value = rand(0, count($data['moves']));
+        $value = rand(0, $moveCount);
         $randArray[] = $value;
         echo $data['moves'][json_encode($value)]['move']['name'] . "<br>";
     }?>
