@@ -17,13 +17,13 @@ $evoDecode = json_decode($evoChain, true);
 $image = $data['sprites']['front_shiny'];
 $imageData = base64_encode(file_get_contents($image));
 $moveCount = count($data['moves']);
+$prevEvo = $evoData["evolves_from_species"]["name"];
 $randArray = [];
 
-if (isset($nextEvo) === null){
-    echo $nextEvo = "";
-} else {
-
-}
+//if (isset($nextEvo) === null){
+//    echo $nextEvo = "";
+//} else {
+//}
 
 //----Loop to get 4 random moves
 
@@ -40,8 +40,6 @@ if (isset($_GET['id'])) {
 } else {
     $pokemon = "1";
 }
-
-echo $evoData ["evolution_chain"]["url"]
 
 ?>
 
@@ -80,7 +78,11 @@ echo $evoData ["evolution_chain"]["url"]
 </p>
 
 
-<p id="prevEvolution">Previous Evolution: <?php echo $evoData["evolves_from_species"]["name"];?></p>
+<p id="prevEvolution">Previous Evolution: <?php if (isset ($prevEvo)){
+    echo $prevEvo;
+    } else {
+    echo "";
+    };?></p>
 
 </body>
 </html>
