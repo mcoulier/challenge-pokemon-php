@@ -4,13 +4,13 @@ body {
     display: grid;
 }
 
-h1{
-
+form {
+    padding-top: 5px;
 }
 
 #searchPokemon {
-    position: absolute;
-    padding-top: 50px;
+    position: relative;
+    grid-row: 2;
 }
 
 #evolutionPokemon {
