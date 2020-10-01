@@ -13,6 +13,7 @@ if (isset($_GET['id'])) {
     $pokeId = $data['id'];
     $pokeType = $data['types'][0]['type']['name'];
 
+
 //---Getting image and moves from api--------
     if ($pokeName !== null) {
         $image = $data['sprites']['front_shiny'];
