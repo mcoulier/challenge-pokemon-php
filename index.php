@@ -18,6 +18,8 @@ $image = $data['sprites']['front_shiny'];
 $imageData = base64_encode(file_get_contents($image));
 $moveCount = count($data['moves']);
 $prevEvo = $evoData["evolves_from_species"]["name"];
+$prevImg = @file_get_contents('https://pokeapi.co/api/v2/pokemon/' . $prevEvo);
+$prevDecode = json_decode($prevImg, true);
 $randArray = [];
 
 //if (isset($nextEvo) === null){
@@ -80,6 +82,7 @@ if (isset($_GET['id'])) {
 
 <p id="prevEvolution">Previous Evolution: <?php if (isset ($prevEvo)){
     echo $prevEvo;
+    echo $prevDecode['sprites']['front_default'];
     } else {
     echo "";
     };?></p>
