@@ -8,8 +8,10 @@ if (isset($_GET['id'])) {
     $nameId = $_GET['id'];
     $pokemonData = file_get_contents('https://pokeapi.co/api/v2/pokemon/' . $nameId);
     $data = json_decode($pokemonData, true);
+
     if ($data['name'] !== null) {
         $image = $data['sprites']['front_shiny'];
+        $imageData = base64_encode(file_get_contents($image));
         $moveCount = count($data['moves']);
         $randArray = [];
 
@@ -17,25 +19,27 @@ if (isset($_GET['id'])) {
             $value = rand(0, count($data['moves']));
             $randArray[] = $value;
         }
+
+        $speciesData = file_get_contents('https://pokeapi.co/api/v2/pokemon-species/' . $_GET ['id']);
+        $evoData = json_decode($speciesData, true);
+        $prevEvo = $evoData["evolves_from_species"]["name"];
+
+        if ($prevEvo !== null){
+            $evoChain = file_get_contents (rtrim($evoData ["evolution_chain"]["url"],'/'));
+            $evoDecode = json_decode($evoChain, true);
+            $prevName = @file_get_contents('https://pokeapi.co/api/v2/pokemon/' . $prevEvo);
+            $prevDecode = json_decode($prevName, true);
+            $prevImg = $prevDecode['sprites']['front_shiny'];
+            $showPrevImg = base64_encode(file_get_contents($prevImg));
+
+        }
+
     }
 }
 
 
-$pokemonData = file_get_contents('https://pokeapi.co/api/v2/pokemon/' . $_GET['id']);
-$speciesData = file_get_contents('https://pokeapi.co/api/v2/pokemon-species/' . $_GET ['id']);
-
-$evoData = json_decode($speciesData, true);
-
-$evoChain = file_get_contents (rtrim($evoData ["evolution_chain"]["url"],'/'));
-$evoDecode = json_decode($evoChain, true);
 //$nextEvo = $evoDecode['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'];
 
-$imageData = base64_encode(file_get_contents($image));
-$prevEvo = $evoData["evolves_from_species"]["name"];
-$prevName = @file_get_contents('https://pokeapi.co/api/v2/pokemon/' . $prevEvo);
-$prevDecode = json_decode($prevName, true);
-$prevImg = $prevDecode['sprites']['front_shiny'];
-$showPrevImg = base64_encode(file_get_contents($prevImg));
 
 //if (isset($nextEvo) === null){
 //    echo $nextEvo = "";
