@@ -18,8 +18,10 @@ $image = $data['sprites']['front_shiny'];
 $imageData = base64_encode(file_get_contents($image));
 $moveCount = count($data['moves']);
 $prevEvo = $evoData["evolves_from_species"]["name"];
-$prevImg = @file_get_contents('https://pokeapi.co/api/v2/pokemon/' . $prevEvo);
-$prevDecode = json_decode($prevImg, true);
+$prevName = @file_get_contents('https://pokeapi.co/api/v2/pokemon/' . $prevEvo);
+$prevDecode = json_decode($prevName, true);
+$prevImg = $prevDecode['sprites']['front_shiny'];
+$showPrevImg = base64_encode(file_get_contents($prevImg));
 $randArray = [];
 
 //if (isset($nextEvo) === null){
@@ -82,10 +84,11 @@ if (isset($_GET['id'])) {
 
 <p id="prevEvolution">Previous Evolution: <?php if (isset ($prevEvo)){
     echo $prevEvo;
-    echo $prevDecode['sprites']['front_default'];
+        echo '<img src="data:image/jpeg;base64,'.$showPrevImg.'">';
     } else {
     echo "";
     };?></p>
 
+<img id="prevImage" src="<?php echo $image?>">
 </body>
 </html>
